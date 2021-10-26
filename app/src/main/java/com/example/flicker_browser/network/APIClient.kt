@@ -1,4 +1,4 @@
-package com.example.flicker_browser
+package com.example.flicker_browser.network
 
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder

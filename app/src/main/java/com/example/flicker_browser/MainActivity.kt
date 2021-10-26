@@ -1,14 +1,14 @@
 package com.example.flicker_browser
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.flicker_browser.network.APIClient
+import com.example.flicker_browser.network.APIInterface
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,9 +21,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var ser: Button
     lateinit var ed: EditText
     lateinit var spn: Spinner
+    var imgarr= arrayListOf<image>()
     var sel=0
     var sell=arrayListOf(10,50,100)
-//    var imgarr=arrayListOf<image>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -53,13 +53,13 @@ class MainActivity : AppCompatActivity() {
         ed=findViewById(R.id.ed)
         spn=findViewById(R.id.spn)
         rv=findViewById(R.id.rvm)
-        rv.adapter=RVAdapter(image.imgarr,this)
+        rv.adapter=RVAdapter(imgarr,this)
         rv.layoutManager= GridLayoutManager(this,2)
 //        rv.layoutManager= LinearLayoutManager(this)
     }
     fun search() {
         val apif = APIClient().getClient()?.create(APIInterface::class.java)
-        image.imgarr.clear()
+        imgarr.clear()
         CoroutineScope(Dispatchers.IO).launch {
             if (apif != null) {
                 apif.getdat("flickr.photos.search","33a9d39f0edb9d9c75cdf2a50fa983cd",ed.text.toString(),sell[sel].toString(),"json",)
@@ -71,11 +71,9 @@ class MainActivity : AppCompatActivity() {
                             var a = response.body()
                             for (i in a!!.photos?.photo!!) {
 
-                                image.imgarr.add(
-                                    image(
-                                        i.title,
-                                        "https://farm${i.farm}.staticflickr.com/${i.server}/${i.id}_${i.secret}.jpg"
-                                    )
+                                imgarr.add(
+                                    image(i.title, "https://farm${i.farm}.staticflickr.com/${i.server}/${i.id}_${i.secret}.jpg",
+                                        ed.text.toString(),i.id)
                                 )
 
                             }

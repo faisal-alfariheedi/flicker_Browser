@@ -1,7 +1,8 @@
-package com.example.flicker_browser
+package com.example.flicker_browser.network
 
 
 
+import com.example.flicker_browser.feed
 import retrofit2.Call
 import retrofit2.http.*
 

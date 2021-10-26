@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Flicker_Browser">
         <activity
+            android:name=".fav"
+            android:exported="false" />
+        <activity
             android:name=".fullview"
             android:exported="false" />
         <activity

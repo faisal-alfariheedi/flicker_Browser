@@ -1,14 +1,12 @@
 package com.example.flicker_browser
 
-class image {
-    var title:String? = null
-    var link:String? = null
-    companion object{
-        var imgarr= arrayListOf<image>()
-    }
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-    constructor(title: String?, link: String?) {
-        this.title = title
-        this.link = link
-    }
-}
+@Entity(tableName="image")
+class image(@ColumnInfo(name="title") var title:String? = null,
+            @ColumnInfo(name="link") var link:String? = null,
+            @ColumnInfo(name="tag") var tag:String?=null,
+            @PrimaryKey @ColumnInfo(name = "id") var id: String? = null
+)

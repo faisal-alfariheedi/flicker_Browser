@@ -18,6 +18,7 @@ class fullview : AppCompatActivity() {
         im = findViewById(R.id.imageView)
         tv=findViewById(R.id.tvtitle)
         bk=findViewById(R.id.back)
+        //change to get data from image fav database
         Glide.with(im.getContext())
             .load(image.imgarr[intent.getIntExtra("pos",0)].link)
             .into(im)
