@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 
@@ -31,6 +30,10 @@ class RVAdapter(var s:ArrayList<image>,var cont: Context): RecyclerView.Adapter<
             im.setOnClickListener {
                 val intent = Intent(cont, fullview::class.java)
                 intent.putExtra("pos",position)
+                if(cont is MainActivity)
+                    intent.putExtra("bk","main")
+                if(cont is Fav)
+                    intent.putExtra("bk","fav")
                 context.startActivity(intent)
             }
         }

@@ -13,6 +13,9 @@ interface imageDao {
     @Query("SELECT * from image WHERE id=:id")
     fun getImage(id:Int):image
 
+    @Query("SELECT id from image")
+    fun getfavidlist():List<String>
+
     @Insert(onConflict= OnConflictStrategy.REPLACE)
     fun addeditIMage(img: image)
 

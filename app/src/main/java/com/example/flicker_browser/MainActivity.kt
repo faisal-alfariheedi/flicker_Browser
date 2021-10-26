@@ -1,14 +1,18 @@
 package com.example.flicker_browser
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flicker_browser.network.APIClient
 import com.example.flicker_browser.network.APIInterface
+import com.example.flicker_browser.network.feed
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var ser: Button
     lateinit var ed: EditText
     lateinit var spn: Spinner
-    var imgarr= arrayListOf<image>()
+//    var imgarr= arrayListOf<image>()
     var sel=0
     var sell=arrayListOf(10,50,100)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,13 +57,14 @@ class MainActivity : AppCompatActivity() {
         ed=findViewById(R.id.ed)
         spn=findViewById(R.id.spn)
         rv=findViewById(R.id.rvm)
-        rv.adapter=RVAdapter(imgarr,this)
+        image.imgarr.clear()
+        rv.adapter=RVAdapter(image.imgarr,this)
         rv.layoutManager= GridLayoutManager(this,2)
 //        rv.layoutManager= LinearLayoutManager(this)
     }
     fun search() {
         val apif = APIClient().getClient()?.create(APIInterface::class.java)
-        imgarr.clear()
+        image.imgarr.clear()
         CoroutineScope(Dispatchers.IO).launch {
             if (apif != null) {
                 apif.getdat("flickr.photos.search","33a9d39f0edb9d9c75cdf2a50fa983cd",ed.text.toString(),sell[sel].toString(),"json",)
@@ -71,9 +76,9 @@ class MainActivity : AppCompatActivity() {
                             var a = response.body()
                             for (i in a!!.photos?.photo!!) {
 
-                                imgarr.add(
+                                image.imgarr.add(
                                     image(i.title, "https://farm${i.farm}.staticflickr.com/${i.server}/${i.id}_${i.secret}.jpg",
-                                        ed.text.toString(),i.id)
+                                        ed.text.toString(),i.id!!)
                                 )
 
                             }
@@ -90,5 +95,30 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    //https://farm$farmID.staticflickr.com/$serverID/${id}_$secret.jpg
+    /////////////////////menu////////////////////////////
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+
+        val item1 = menu!!.getItem(0)
+        item1.setTitle("switch to favorite")
+
+
+        return super.onPrepareOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.m1 -> {
+                intent= Intent(this, Fav::class.java)
+                startActivity(intent)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

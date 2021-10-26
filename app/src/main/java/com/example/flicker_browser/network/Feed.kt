@@ -1,4 +1,4 @@
-package com.example.flicker_browser
+package com.example.flicker_browser.network
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

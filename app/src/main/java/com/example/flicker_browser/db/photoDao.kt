@@ -1,7 +1,7 @@
 package com.example.flicker_browser.db
 
 import androidx.room.*
-import com.example.flicker_browser.feed
+import com.example.flicker_browser.network.feed
 
 
 @Dao

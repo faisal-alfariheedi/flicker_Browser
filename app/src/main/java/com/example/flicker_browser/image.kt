@@ -8,5 +8,9 @@ import androidx.room.PrimaryKey
 class image(@ColumnInfo(name="title") var title:String? = null,
             @ColumnInfo(name="link") var link:String? = null,
             @ColumnInfo(name="tag") var tag:String?=null,
-            @PrimaryKey @ColumnInfo(name = "id") var id: String? = null
-)
+            @PrimaryKey @ColumnInfo(name = "id") var id: String
+){
+    companion object{
+        var imgarr= arrayListOf<image>()
+    }
+}
