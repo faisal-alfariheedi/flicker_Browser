@@ -9,6 +9,9 @@ interface imageDao {
 
     @Query("SELECT * from image")
     fun getall():List<image>
+    
+    @Query("SELECT * from image WHERE id=:id")
+    fun getImage(id:Int):image
 
     @Insert(onConflict= OnConflictStrategy.REPLACE)
     fun addeditIMage(img: image)
