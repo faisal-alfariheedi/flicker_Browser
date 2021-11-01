@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/main">
+
+    <fragment
+        android:id="@+id/main"
+        android:name="com.example.flicker_browser.main"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_main_to_fullv"
+            app:destination="@id/fullv" />
+        <action
+            android:id="@+id/action_main_to_favv"
+            app:destination="@id/favv" />
+    </fragment>
+    <fragment
+        android:id="@+id/favv"
+        android:name="com.example.flicker_browser.favv"
+        android:label="fragment_favv"
+        tools:layout="@layout/fragment_favv" >
+        <action
+            android:id="@+id/action_favv_to_fullv"
+            app:destination="@id/fullv" />
+        <action
+            android:id="@+id/action_favv_to_main"
+            app:destination="@id/main" />
+    </fragment>
+    <fragment
+        android:id="@+id/fullv"
+        android:name="com.example.flicker_browser.fullv"
+        android:label="fragment_fullv"
+        tools:layout="@layout/fragment_fullv" >
+        <action
+            android:id="@+id/action_fullv_to_main"
+            app:destination="@id/main" />
+        <action
+            android:id="@+id/action_fullv_to_favv"
+            app:destination="@id/favv" />
+    </fragment>
+</navigation>

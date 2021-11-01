@@ -12,5 +12,6 @@ class image(@ColumnInfo(name="title") var title:String? = null,
 ){
     companion object{
         var imgarr= arrayListOf<image>()
+        var pocket=arrayOf<Int>(0,0)
     }
 }

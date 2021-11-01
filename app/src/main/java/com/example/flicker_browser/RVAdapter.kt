@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 
 
-class RVAdapter(var s:ArrayList<image>,var cont: Context): RecyclerView.Adapter<RVAdapter.ItemViewHolder>() {
+class RVAdapter(var s:ArrayList<image>,var cont: Fragment): RecyclerView.Adapter<RVAdapter.ItemViewHolder>() {
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RVAdapter.ItemViewHolder {
@@ -28,13 +30,15 @@ class RVAdapter(var s:ArrayList<image>,var cont: Context): RecyclerView.Adapter<
                 .dontAnimate()
                 .into(im)
             im.setOnClickListener {
-                val intent = Intent(cont, fullview::class.java)
-                intent.putExtra("pos",position)
-                if(cont is MainActivity)
-                    intent.putExtra("bk","main")
-                if(cont is Fav)
-                    intent.putExtra("bk","fav")
-                context.startActivity(intent)
+                image.pocket[1]=position
+                if(cont is main) {
+                    image.pocket[0] = 0
+                    Navigation.findNavController(cont.requireView()).navigate(R.id.action_main_to_fullv)
+                }
+                if(cont is favv) {
+                    image.pocket[0] = 1
+                    Navigation.findNavController(cont.requireView()).navigate(R.id.action_favv_to_fullv)
+                }
             }
         }
     }
